@@ -38,7 +38,7 @@ primitive (!): Bool -> Bool = "@not"
 primitive (&&): (Bool, Bool) -> Bool = "@and"
 primitive (||): (Bool, Bool) -> Bool = "@or"
 
-enum StringList {
+enum rec StringList {
   [],
   [...](String, StringList),
 }

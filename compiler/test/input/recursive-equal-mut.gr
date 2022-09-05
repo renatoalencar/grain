@@ -3,7 +3,7 @@
 
 export enum Opt<a> { None, Some(a) }
 
-export record Rec { int: Number, mut r: Opt<Rec> }
+export record rec Rec { int: Number, mut r: Opt<Rec> }
 
 let a = { int: 5, r: None }
 let b = { int: 5, r: None }

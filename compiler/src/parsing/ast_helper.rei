@@ -228,6 +228,7 @@ module Top: {
     (
       ~loc: loc=?,
       ~attributes: attributes=?,
+      ~rec_flag: rec_flag,
       list((export_flag, data_declaration))
     ) =>
     toplevel_stmt;

@@ -35,7 +35,7 @@ primitive (&&): (Bool, Bool) -> Bool = "@and"
 primitive (||): (Bool, Bool) -> Bool = "@or"
 primitive throw: Exception -> a = "@throw"
 
-enum List<a> {
+enum rec List<a> {
   [],
   [...](a, List<a>),
 }

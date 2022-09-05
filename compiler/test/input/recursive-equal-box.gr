@@ -1,6 +1,6 @@
 export enum Opt<a> { None, Some(a) }
 
-export enum R { Atom, Recursive(Box<Opt<R>>) }
+export enum rec R { Atom, Recursive(Box<Opt<R>>) }
 
 let t = box(None)
 let u = box(None)
@@ -15,7 +15,7 @@ u := Some(w)
 
 assert x == w
 
-export record Rec {
+export record rec Rec {
   int: Number,
   r: Box<Opt<Rec>>
 }

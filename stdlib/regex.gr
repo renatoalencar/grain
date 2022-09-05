@@ -403,7 +403,7 @@ enum UnicodeCategory {
   OtherPrivateUse,
 }
 
-enum ParsedRegularExpression {
+enum rec ParsedRegularExpression {
   RENever,
   REEmpty,
   REAny,

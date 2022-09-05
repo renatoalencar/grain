@@ -333,6 +333,14 @@ data_declaration_stmt:
 data_declaration_stmts:
   | separated_nonempty_list(comma, data_declaration_stmt) { $1 }
 
+rec_data_declaration_stmt:
+  | EXPORT rec_data_declaration { (Exported, $2) }
+  | rec_data_declaration { (Nonexported, $1) }
+
+rec_data_declaration_stmts:
+  | rec_data_declaration_stmt { [ $1 ] }
+  | rec_data_declaration_stmt comma separated_list(comma, data_declaration_stmt) { $1 :: $3 }
+
 export_exception:
   | EXCEPT lseparated_nonempty_list(comma, export_id_str) {$2}
 
@@ -374,6 +382,11 @@ data_declaration:
   | TYPE UIDENT id_vec? equal typ { Dat.abstract ~loc:(to_loc $loc) (mkstr $loc($2) $2) (Option.value ~default:[] $3) (Some $5) }
   | ENUM UIDENT id_vec? data_constructors { Dat.variant ~loc:(to_loc $loc) (mkstr $loc($2) $2) (Option.value ~default:[] $3) $4 }
   | RECORD UIDENT id_vec? data_labels { Dat.record ~loc:(to_loc $loc) (mkstr $loc($2) $2) (Option.value ~default:[] $3) $4 }
+
+rec_data_declaration:
+  | TYPE REC UIDENT id_vec? equal typ { Dat.abstract ~loc:(to_loc $loc) (mkstr $loc($3) $3) (Option.value ~default:[] $4) (Some $6) }
+  | ENUM REC UIDENT id_vec? data_constructors { Dat.variant ~loc:(to_loc $loc) (mkstr $loc($3) $3) (Option.value ~default:[] $4) $5 }
+  | RECORD REC UIDENT id_vec? data_labels { Dat.record ~loc:(to_loc $loc) (mkstr $loc($3) $3) (Option.value ~default:[] $4) $5 }
 
 prim1_expr:
   | NOT non_assign_expr { Exp.apply ~loc:(to_loc $loc) (mkid_expr $loc($1) [mkstr $loc($1) "!"]) [$2] }
@@ -699,7 +712,8 @@ toplevel_stmt:
   | attributes LET value_binds { Top.let_ ~loc:(to_loc $sloc) ~attributes:$1 Nonexported Nonrecursive Immutable $3 }
   | attributes LET REC MUT value_binds { Top.let_ ~loc:(to_loc $sloc) ~attributes:$1 Nonexported Recursive Mutable $5 }
   | attributes LET MUT value_binds { Top.let_ ~loc:(to_loc $sloc) ~attributes:$1 Nonexported Nonrecursive Mutable $4 }
-  | attributes data_declaration_stmts { Top.data ~loc:(to_loc $sloc) ~attributes:$1 $2 }
+  | attributes data_declaration_stmts { Top.data ~loc:(to_loc $sloc) ~attributes:$1 ~rec_flag:Nonrecursive $2 }
+  | attributes rec_data_declaration_stmts { Top.data ~loc:(to_loc $sloc) ~attributes:$1 ~rec_flag:Recursive $2 }
   | attributes IMPORT foreign_stmt { Top.foreign ~loc:(to_loc $loc) ~attributes:$1 Nonexported $3 }
   | attributes import_stmt { Top.import ~loc:(to_loc $loc) ~attributes:$1 $2 }
   | expr { Top.expr ~loc:(to_loc $loc) $1 }

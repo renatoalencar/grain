@@ -487,16 +487,16 @@ let type_module = (~toplevel=false, funct_body, anchor, env, sstr /*scope*/) => 
     );
   };
 
-  let process_datas = (env, data_decls, attributes, loc) => {
+  let process_datas = (env, rec_flag, data_decls, attributes, loc) => {
     let (decls, newenv) =
       Typedecl.transl_data_decl(
         env,
-        Recursive,
+        rec_flag,
         List.map(((_, d)) => d, data_decls),
       );
     let ty_decl =
       map2_rec_type_with_row_types(
-        ~rec_flag=Recursive,
+        ~rec_flag=rec_flag,
         (rs, info, e) => {
           let e =
             if (data_needs_export(info.data_name)) {
@@ -738,9 +738,9 @@ let type_module = (~toplevel=false, funct_body, anchor, env, sstr /*scope*/) => 
             | None => signatures
             };
           (new_env, signatures, [statement, ...statements]);
-        | PTopData(data_decls) =>
+        | PTopData(rec_flag, data_decls) =>
           let (new_env, sigs, statement) =
-            process_datas(env, data_decls, attributes, loc);
+            process_datas(env, rec_flag, data_decls, attributes, loc);
           (
             new_env,
             List.rev(sigs) @ signatures,

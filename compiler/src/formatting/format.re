@@ -4057,7 +4057,7 @@ let toplevel_print =
           value_description,
         ),
       ]);
-    | PTopData(data_declarations) =>
+    | PTopData(_, data_declarations) =>
       data_print(~original_source, ~comments, data_declarations)
 
     | PTopLet(export_flag, rec_flag, mut_flag, value_bindings) =>

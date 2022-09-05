@@ -47,7 +47,7 @@ import { toString, print, concat as (++) } from "runtime/string"
  *
  * @since v0.1.0
  */
-export enum List<a> {
+export enum rec List<a> {
   [],
   [...](a, List<a>),
 }

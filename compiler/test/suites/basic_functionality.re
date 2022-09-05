@@ -220,20 +220,23 @@ describe("basic functionality", ({test, testSkip}) => {
         |},
         {
           statements: [
-            Top.data([
-              (
-                Asttypes.Nonexported,
-                Dat.variant(
-                  Location.mknoloc("Caipirinha"),
-                  [],
-                  [
-                    CDecl.singleton(Location.mknoloc("Cachaça")),
-                    CDecl.singleton(Location.mknoloc("Sugar")),
-                    CDecl.singleton(Location.mknoloc("Lime")),
-                  ],
+            Top.data(
+              Nonrecursive,
+              [
+                (
+                  Asttypes.Nonexported,
+                  Dat.variant(
+                    Location.mknoloc("Caipirinha"),
+                    [],
+                    [
+                      CDecl.singleton(Location.mknoloc("Cachaça")),
+                      CDecl.singleton(Location.mknoloc("Sugar")),
+                      CDecl.singleton(Location.mknoloc("Lime")),
+                    ],
+                  ),
                 ),
-              ),
-            ]),
+              ]
+            ),
             Top.let_(
               Asttypes.Nonexported,
               Asttypes.Nonrecursive,
@@ -245,23 +248,26 @@ describe("basic functionality", ({test, testSkip}) => {
                 ),
               ],
             ),
-            Top.data([
-              (
-                Asttypes.Nonexported,
-                Dat.abstract(
-                  Location.mknoloc("Über"),
-                  [],
-                  Some(
-                    Typ.constr(
-                      Location.mknoloc(
-                        Identifier.IdentName(Location.mknoloc("Number")),
+            Top.data(
+              Nonrecursive,
+              [
+                (
+                  Asttypes.Nonexported,
+                  Dat.abstract(
+                    Location.mknoloc("Über"),
+                    [],
+                    Some(
+                      Typ.constr(
+                        Location.mknoloc(
+                          Identifier.IdentName(Location.mknoloc("Number")),
+                        ),
+                        [],
                       ),
-                      [],
                     ),
                   ),
                 ),
-              ),
-            ]),
+              ]
+            ),
           ],
           comments: [],
           prog_loc: Location.dummy_loc,

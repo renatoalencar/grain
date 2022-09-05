@@ -12,7 +12,7 @@ import WasmI32 from "runtime/unsafe/wasmi32"
 import { allocateArray } from "runtime/dataStructures"
 
 // TODO: Consider implementing this as List<(Box<k>, Box<v>)>
-record Bucket<k, v> {
+record rec Bucket<k, v> {
   mut key: k,
   mut value: v,
   mut next: Option<Bucket<k, v>>,

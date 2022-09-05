@@ -8,7 +8,7 @@ import List from "list"
 import Array from "array"
 import { hash } from "hash"
 
-record Bucket<t> {
+record rec Bucket<t> {
   mut key: t,
   mut next: Option<Bucket<t>>,
 }

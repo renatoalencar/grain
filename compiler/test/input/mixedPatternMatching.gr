@@ -5,7 +5,7 @@ export record Rec {
   bar: String,
 }
 
-export enum Poly {
+export enum rec Poly {
   PList(List<Number>),
   PArray(Array<Poly>),
   PAssoc(Rec),
